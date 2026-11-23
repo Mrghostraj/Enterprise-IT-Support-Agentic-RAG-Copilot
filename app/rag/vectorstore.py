@@ -13,6 +13,7 @@ _vectorstore = None
 
 EMBEDDING_DIMENSIONS = {
     "models/gemini-embedding-001": 3072,
+    "models/text-embedding-004": 768,
     "sentence-transformers/all-MiniLM-L6-v2": 384,
 }
 
@@ -45,11 +46,11 @@ def get_embedding_dimension(model_name: str | None = None) -> int:
 def get_embeddings():
     global _embeddings
     if _embeddings is None:
-        if not settings.google_api_key:
-            raise ValueError("GOOGLE_API_KEY is missing")
+        if not settings.gemini_api_key:
+            raise ValueError("GEMINI_API_KEY is missing")
         _embeddings = GoogleGenerativeAIEmbeddings(
             model=settings.embedding_model,
-            google_api_key=settings.google_api_key,
+            google_api_key=settings.gemini_api_key,
         )
     return _embeddings
 
